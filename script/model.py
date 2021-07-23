@@ -24,11 +24,11 @@ device = '/gpu:0'
 #### CAN config #####
 
 def gen_coaction(ad, his_items, dim, mode="can", mask=None):
-    weight, bias = [], []
     idx = 0
     weight_orders = []
     bias_orders = []
     for i in range(orders):
+        weight, bias = [], []
         for w, b in zip(weight_emb_w, weight_emb_b):
             weight.append(tf.reshape(ad[:, idx:idx+w[0]*w[1]], [-1, w[0], w[1]]))
             idx += w[0] * w[1]
