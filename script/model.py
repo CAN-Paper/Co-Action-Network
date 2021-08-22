@@ -24,11 +24,13 @@ device = '/gpu:0'
 #### CAN config #####
 
 def gen_coaction(ad, his_items, dim, mode="can", mask=None):
-    weight, bias = [], []
-    idx = 0
+    #  weight, bias = [], []  这处之前有PR提出是bug
+    #  idx = 0  这里同样，当order_indep=True时，存在bug
     weight_orders = []
     bias_orders = []
     for i in range(orders):
+        weight, bias = [], []  # 修改上面
+        idx = 0  # 修改上面
         for w, b in zip(weight_emb_w, weight_emb_b):
             weight.append(tf.reshape(ad[:, idx:idx+w[0]*w[1]], [-1, w[0], w[1]]))
             idx += w[0] * w[1]
